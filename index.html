@@ -53,31 +53,28 @@
     background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
     color:#D8DEF3; padding:5px 10px; border-radius:6px; font-size:12px;
   }
+  .reset-btn{
+    font-family:inherit; font-size:12px; font-weight:500; cursor:pointer;
+    background:transparent; border:1px solid rgba(255,255,255,.25); color:#D8DEF3;
+    padding:5px 10px; border-radius:6px;
+  }
+  .reset-btn:hover{background:rgba(255,255,255,.1);}
+  .capacity-line{
+    font-size:13px; color:var(--navy); font-style:italic; margin-top:8px;
+  }
+  .compare-card{
+    display:flex; gap:0; border:1px solid var(--border); border-radius:10px;
+    overflow:hidden; margin-bottom:20px;
+  }
+  .compare-col{flex:1; padding:15px 18px; background:var(--card);}
+  .compare-col.found{background:#FBF8F0;}
+  .compare-label{font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--mute); font-weight:600; margin-bottom:8px;}
+  .compare-quote{font-size:13.5px; color:var(--slate); line-height:1.45; margin-bottom:8px;}
+  .compare-tag{font-size:11.5px; color:var(--mute);}
+  .compare-divider{width:1px; background:var(--border);}
 
   /* ---- layout ---- */
-  .layout{display:flex; min-height:calc(100vh - 58px);}
-  .sidebar{
-    width:260px; flex-shrink:0; background:var(--card);
-    border-right:1px solid var(--border); padding:18px 0;
-  }
-  .sidebar h3{
-    font-size:11px; text-transform:uppercase; letter-spacing:.08em;
-    color:var(--mute); font-weight:600; margin:0 18px 10px;
-  }
-  .company-item{
-    padding:11px 18px; cursor:pointer; border-left:3px solid transparent;
-    display:flex; flex-direction:column; gap:3px;
-  }
-  .company-item:hover{background:#F7F8FD;}
-  .company-item.active{border-left-color:var(--accent); background:#F0F3FE;}
-  .company-name{font-weight:600; font-size:13.5px; color:var(--navy);}
-  .company-meta{font-size:11.5px; color:var(--mute);}
-  .company-score-row{display:flex; align-items:center; gap:6px; margin-top:2px;}
-  .mini-grade{
-    font-size:11px; font-weight:700; padding:1px 6px; border-radius:4px;
-  }
-
-  .main{flex:1; padding:24px 28px; max-width:1180px;}
+  .layout{min-height:calc(100vh - 58px);}
 
   /* ---- company header ---- */
   .company-header{
@@ -212,6 +209,85 @@
   footer{
     text-align:center; font-size:11.5px; color:var(--mute); padding:22px 0 30px;
   }
+
+  /* ---- backtest & pilot sections ---- */
+  .section-block{
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:20px 22px; margin-top:22px;
+  }
+  .section-block h2{font-size:15px; color:var(--navy); margin:0 0 4px;}
+  .section-caption{font-size:12.5px; color:var(--mute); margin-bottom:14px;}
+  .backtest-row{
+    display:flex; align-items:center; gap:14px; padding:9px 0;
+    border-bottom:1px solid #EEF0F7; font-size:13px;
+  }
+  .backtest-row:last-child{border-bottom:none;}
+  .backtest-name{width:190px; font-weight:600; color:var(--slate); flex-shrink:0;}
+  .backtest-bar-track{flex:1; height:8px; background:#EDEFF6; border-radius:4px; overflow:hidden;}
+  .backtest-bar-fill{height:100%; border-radius:4px;}
+  .backtest-tag{width:190px; font-size:12px; color:var(--mute); flex-shrink:0; text-align:right;}
+  .pilot-phases{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+  .pilot-phase{
+    flex:1; min-width:140px; background:#F7F8FD; border:1px solid var(--border);
+    border-radius:8px; padding:12px 14px;
+  }
+  .pilot-phase-name{font-size:12.5px; font-weight:700; color:var(--navy); margin-bottom:4px;}
+  .pilot-phase-desc{font-size:11.5px; color:var(--mute); line-height:1.4;}
+  .pilot-cta{
+    display:inline-block; background:var(--navy); color:#fff; text-decoration:none;
+    font-size:13px; font-weight:600; padding:10px 18px; border-radius:7px;
+  }
+  .pilot-cta:hover{opacity:.9;}
+
+  /* ---- home / detail layout ---- */
+  .main-wide{max-width:1040px; margin:0 auto; padding:24px 28px 10px;}
+  .view-section{margin-bottom:26px;}
+  .view-h1{font-size:20px; font-weight:700; color:var(--navy); margin:0 0 4px;}
+  .view-caption{font-size:13px; color:var(--mute); margin-bottom:16px;}
+
+  .frame-hero{
+    background:var(--navy-deep); border-radius:12px; padding:22px 26px; margin-bottom:26px;
+  }
+  .frame-question{color:#fff; font-size:17px; font-weight:600; margin-bottom:16px; max-width:640px; line-height:1.4;}
+  .frame-row{display:flex; align-items:stretch; gap:10px; flex-wrap:wrap;}
+  .frame-box{
+    flex:1; min-width:140px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
+    border-radius:8px; padding:12px 14px;
+  }
+  .frame-box.highlight{background:var(--ice); border-color:var(--ice);}
+  .frame-box.highlight .frame-label, .frame-box.highlight .frame-text{color:var(--navy-deep);}
+  .frame-label{font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#9FADD6; font-weight:700; margin-bottom:5px;}
+  .frame-text{font-size:12.5px; color:#D8DEF3; line-height:1.4;}
+  .frame-arrow{display:flex; align-items:center; color:#5A6AA0; font-size:16px;}
+
+  .portfolio-grid{display:flex; gap:14px; flex-wrap:wrap;}
+  .company-name{font-weight:600; font-size:13.5px; color:var(--navy);}
+  .company-meta{font-size:11.5px; color:var(--mute);}
+  .company-score-row{display:flex; align-items:center; gap:6px; margin-top:2px;}
+  .mini-grade{font-size:11px; font-weight:700; padding:1px 6px; border-radius:4px;}
+  .portfolio-card{
+    flex:1; min-width:220px; background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:16px 18px; cursor:pointer;
+  }
+  .portfolio-card:hover{border-color:var(--accent);}
+  .portfolio-card .company-name{font-size:14.5px;}
+  .portfolio-card .company-meta{margin-bottom:10px;}
+  .portfolio-card .pf-flag{font-size:11.5px; margin-top:8px; font-weight:600;}
+  .pf-flag.clean{color:var(--green);}
+  .pf-flag.watch{color:var(--amber);}
+  .pf-flag.escalate{color:var(--red);}
+  .portfolio-card .view-link{font-size:12px; color:var(--accent); font-weight:600; margin-top:10px;}
+
+  .back-link{
+    background:none; border:none; font-family:inherit; font-size:13px; font-weight:600;
+    color:var(--accent); cursor:pointer; padding:0; margin-bottom:14px; display:inline-block;
+  }
+  .quick-switch{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+  .quick-pill{
+    font-size:12px; padding:6px 12px; border-radius:16px; border:1px solid var(--border);
+    background:var(--card); cursor:pointer; color:var(--slate);
+  }
+  .quick-pill:hover{border-color:var(--accent); color:var(--accent);}
 </style>
 </head>
 <body>
@@ -222,68 +298,130 @@
     <div class="brand-text">Parable Security</div>
     <div class="brand-sub">Trust Console</div>
   </div>
-  <div class="demo-tag">Concept demo &middot; simulated data, not connected to a live system</div>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <button class="reset-btn" onclick="resetDemo()">Reset demo</button>
+    <div class="demo-tag">Concept demo &middot; simulated data, not connected to a live system</div>
+  </div>
 </div>
 
 <div class="layout">
-  <div class="sidebar">
-    <h3>Portfolio</h3>
-    <div id="company-list"></div>
-  </div>
+  <div class="main-wide">
 
-  <div class="main">
-    <div class="company-header">
-      <div>
-        <h1 class="company-title" id="co-name"></h1>
-        <div class="company-sub" id="co-sub"></div>
-      </div>
-      <div class="live-pill"><span class="live-dot"></span>Continuous monitoring active</div>
-    </div>
-
-    <div class="score-panel">
-      <div class="score-big">
-        <div>
-          <div class="score-number mono" id="score-number">--</div>
-          <div class="score-label">Organizational TrustScore</div>
-        </div>
-        <div class="score-grade" id="score-grade">--</div>
-      </div>
-      <div class="subscores" id="subscores"></div>
-    </div>
-
-    <div class="meta-row" id="meta-row"></div>
-
-    <div class="simulate-bar">
-      <div class="simulate-label">Simulate a new signal reaching the collector</div>
-      <div class="sim-buttons">
-        <button class="sim-btn" data-sim="shadow">Unregistered AI tool discovered</button>
-        <button class="sim-btn" data-sim="injection">Prompt injection attempt</button>
-        <button class="sim-btn" data-sim="vendor_lapse">Vendor SOC 2 lapsed</button>
-        <button class="sim-btn" data-sim="vendor_renew">Vendor recertified</button>
-        <button class="sim-btn" data-sim="wire">Large wire, unverified counterparty</button>
-        <button class="sim-btn" data-sim="clean">Routine verified renewal check</button>
-        <button class="sim-btn advance" data-sim="advance">Advance time &rarr;</button>
-      </div>
-    </div>
-
-    <div class="columns">
-      <div class="col-feed">
-        <p class="panel-title">Live signal feed</p>
-        <div class="feed-card" id="feed-card"></div>
-      </div>
-      <div class="col-side">
-        <div>
-          <p class="panel-title">Underwriting recommendation</p>
-          <div class="reco-card" id="reco-card"></div>
-        </div>
-        <div>
-          <p class="panel-title">Trust attestation</p>
-          <div class="attest-card" id="attest-card"></div>
+    <!-- ===================== HOME VIEW ===================== -->
+    <div id="home-view">
+      <div class="frame-hero">
+        <div class="frame-question">Would a chief underwriting officer feel better putting $10M at risk with this extra signal?</div>
+        <div class="frame-row">
+          <div class="frame-box"><div class="frame-label">Today</div><div class="frame-text">Questionnaire + external scans</div></div>
+          <div class="frame-arrow">&rarr;</div>
+          <div class="frame-box"><div class="frame-label">Gap</div><div class="frame-text">Self-attested controls, AI drift, hidden identities</div></div>
+          <div class="frame-arrow">&rarr;</div>
+          <div class="frame-box highlight"><div class="frame-label">Parable</div><div class="frame-text">Continuous trust evidence</div></div>
+          <div class="frame-arrow">&rarr;</div>
+          <div class="frame-box"><div class="frame-label">Outcome</div><div class="frame-text">Quote, condition, capacity, or decline &mdash; with more confidence</div></div>
         </div>
       </div>
+
+      <div class="view-section">
+        <h1 class="view-h1">Portfolio</h1>
+        <div class="view-caption">Select an account to open its live trust console.</div>
+        <div class="portfolio-grid" id="portfolio-grid"></div>
+      </div>
+
+      <div class="section-block">
+        <h2>Portfolio backtest &mdash; illustrative</h2>
+        <div class="section-caption">Modeled on the study Tim proposed: rerun TrustScore against a carrier's historical submissions and compare bind/loss outcomes with and without the signal. This is a mocked illustration of that idea, not a real backtest &mdash; running the real version needs ~100 actual historical submissions from a design partner.</div>
+        <div id="backtest-rows"></div>
+      </div>
+
+      <div class="section-block">
+        <h2>What a 30-day design-partner pilot looks like</h2>
+        <div class="section-caption">Success metric: did Parable reveal material information the underwriter otherwise wouldn't have had?</div>
+        <div class="pilot-phases">
+          <div class="pilot-phase"><div class="pilot-phase-name">Week 1 &middot; Workflow discovery</div><div class="pilot-phase-desc">Map submission &rarr; enrichment &rarr; analysis &rarr; quote/decline &rarr; referral &rarr; bind. Find where missing evidence changes a decision.</div></div>
+          <div class="pilot-phase"><div class="pilot-phase-name">Weeks 2&ndash;3 &middot; Instrument one workflow</div><div class="pilot-phase-desc">Connect only the telemetry required for a useful signal &mdash; no "boil the ocean" integrations.</div></div>
+          <div class="pilot-phase"><div class="pilot-phase-name">Week 4 &middot; Shadow underwriting</div><div class="pilot-phase-desc">Run alongside existing underwriting. Parable doesn't decide; it surfaces additional evidence.</div></div>
+        </div>
+        <a class="pilot-cta" href="mailto:contact@parablesecurity.ai?subject=Design%20partner%20interest">Interested in a 30-day pilot &rarr;</a>
+      </div>
+
+      <footer>Illustrative MVP &mdash; scoring follows the deterministic engine in the Trust Technical Document (100 &minus; signal penalties, forced escalation on untrusted instruction provenance or out-of-scope agent action).</footer>
     </div>
 
-    <footer>Illustrative MVP &mdash; scoring follows the deterministic engine in the Trust Technical Document (100 &minus; signal penalties, forced escalation on untrusted instruction provenance or out-of-scope agent action).</footer>
+    <!-- ===================== DETAIL VIEW ===================== -->
+    <div id="detail-view" style="display:none;">
+      <button class="back-link" onclick="goHome()">&larr; All accounts</button>
+      <div class="quick-switch" id="quick-switch"></div>
+
+      <div class="company-header">
+        <div>
+          <h1 class="company-title" id="co-name"></h1>
+          <div class="company-sub" id="co-sub"></div>
+          <div class="capacity-line" id="capacity-line"></div>
+        </div>
+        <div class="live-pill"><span class="live-dot"></span>Continuous monitoring active</div>
+      </div>
+
+      <div class="score-panel">
+        <div class="score-big">
+          <div>
+            <div class="score-number mono" id="score-number">--</div>
+            <div class="score-label">Organizational TrustScore</div>
+          </div>
+          <div class="score-grade" id="score-grade">--</div>
+        </div>
+        <div class="subscores" id="subscores"></div>
+      </div>
+
+      <div class="meta-row" id="meta-row"></div>
+
+      <div class="compare-card">
+        <div class="compare-col">
+          <div class="compare-label">What the submission said</div>
+          <div class="compare-quote" id="submission-quote"></div>
+          <div class="compare-tag" id="submission-tag"></div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-col found">
+          <div class="compare-label">What Parable found</div>
+          <div class="compare-quote" id="found-text"></div>
+          <div class="compare-tag">Continuously observed &mdash; not self-reported, and it updates as new signals arrive</div>
+        </div>
+      </div>
+
+      <div class="simulate-bar">
+        <div class="simulate-label">Simulate a new signal reaching the collector</div>
+        <div class="sim-buttons">
+          <button class="sim-btn" data-sim="shadow">Unregistered AI tool discovered</button>
+          <button class="sim-btn" data-sim="injection">Prompt injection attempt</button>
+          <button class="sim-btn" data-sim="vendor_lapse">Vendor SOC 2 lapsed</button>
+          <button class="sim-btn" data-sim="vendor_renew">Vendor recertified</button>
+          <button class="sim-btn" data-sim="wire">Large wire, unverified counterparty</button>
+          <button class="sim-btn" data-sim="clean">Routine verified renewal check</button>
+          <button class="sim-btn advance" data-sim="advance">Advance time &rarr;</button>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="col-feed">
+          <p class="panel-title">Live signal feed</p>
+          <div class="feed-card" id="feed-card"></div>
+        </div>
+        <div class="col-side">
+          <div>
+            <p class="panel-title">Underwriting recommendation</p>
+            <div class="reco-card" id="reco-card"></div>
+          </div>
+          <div>
+            <p class="panel-title">Trust attestation</p>
+            <div class="attest-card" id="attest-card"></div>
+          </div>
+        </div>
+      </div>
+
+      <footer>Illustrative MVP &mdash; scoring follows the deterministic engine in the Trust Technical Document (100 &minus; signal penalties, forced escalation on untrusted instruction provenance or out-of-scope agent action).</footer>
+    </div>
+
   </div>
 </div>
 
@@ -383,33 +521,52 @@ const SCENARIOS = {
 
 /* ---------------- portfolio ---------------- */
 let day = 1;
-const companies = [
-  {
-    id:'abc', name:'ABC Health', industry:'Healthcare', limit:'$25M requested limit',
-    sub:{gov:91, identity:86, thirdParty:73, workflow:84}, freshness:96,
-    obs:{aiApps:47, unregistered:5, sensitive:3, verifyEvents:1},
-    feed:[], entities:{}
-  },
-  {
-    id:'ridge', name:'Ridgeline Manufacturing Co.', industry:'Industrial / Manufacturing', limit:'$15M requested limit',
-    sub:{gov:93, identity:92, thirdParty:88, workflow:90}, freshness:99,
-    obs:{aiApps:12, unregistered:0, sensitive:1, verifyEvents:0},
-    feed:[], entities:{}
-  },
-  {
-    id:'beacon', name:'Beacon Point Financial', industry:'Fintech', limit:'$40M requested limit',
-    sub:{gov:58, identity:66, thirdParty:61, workflow:70}, freshness:88,
-    obs:{aiApps:31, unregistered:9, sensitive:6, verifyEvents:3},
-    feed:[], entities:{}
-  },
-  {
-    id:'sable', name:'Sable & Cross LLP', industry:'Legal services', limit:'$10M requested limit',
-    sub:{gov:79, identity:81, thirdParty:70, workflow:77}, freshness:94,
-    obs:{aiApps:9, unregistered:1, sensitive:2, verifyEvents:0},
-    feed:[], entities:{}
-  },
-];
+
+function freshCompanies(){
+  return [
+    {
+      id:'abc', name:'ABC Health', industry:'Healthcare', limit:'$25M requested limit', limitLabel:'$25M',
+      submissionQuote:'\u201CNo known unauthorized AI applications access sensitive customer data.\u201D',
+      submissionAttestedBy:'Self-attested by CFO / General Counsel',
+      sub:{gov:91, identity:86, thirdParty:73, workflow:84}, freshness:96,
+      obs:{aiApps:47, unregistered:5, sensitive:3, verifyEvents:1},
+      feed:[], entities:{}
+    },
+    {
+      id:'ridge', name:'Ridgeline Manufacturing Co.', industry:'Industrial / Manufacturing', limit:'$15M requested limit', limitLabel:'$15M',
+      submissionQuote:'\u201CAll AI-enabled tooling is inventoried and centrally IT-managed.\u201D',
+      submissionAttestedBy:'Self-attested by VP Operations',
+      sub:{gov:93, identity:92, thirdParty:88, workflow:90}, freshness:99,
+      obs:{aiApps:12, unregistered:0, sensitive:1, verifyEvents:0},
+      feed:[], entities:{}
+    },
+    {
+      id:'beacon', name:'Beacon Point Financial', industry:'Fintech', limit:'$40M requested limit', limitLabel:'$40M',
+      submissionQuote:'\u201CThird-party AI vendors are reviewed annually under our vendor risk program.\u201D',
+      submissionAttestedBy:'Self-attested by CISO',
+      sub:{gov:58, identity:66, thirdParty:61, workflow:70}, freshness:88,
+      obs:{aiApps:31, unregistered:9, sensitive:6, verifyEvents:3},
+      feed:[], entities:{}
+    },
+    {
+      id:'sable', name:'Sable & Cross LLP', industry:'Legal services', limit:'$10M requested limit', limitLabel:'$10M',
+      submissionQuote:'\u201CClient data is not processed by any AI system without partner sign-off.\u201D',
+      submissionAttestedBy:'Self-attested by Managing Partner',
+      sub:{gov:79, identity:81, thirdParty:70, workflow:77}, freshness:94,
+      obs:{aiApps:9, unregistered:1, sensitive:2, verifyEvents:0},
+      feed:[], entities:{}
+    },
+  ];
+}
+let companies = freshCompanies();
 let activeId = 'abc';
+
+function resetDemo(){
+  day = 1;
+  companies = freshCompanies();
+  activeId = 'abc';
+  goHome();
+}
 
 function orgScore(co){
   const vals = Object.values(co.sub);
@@ -432,25 +589,59 @@ function clamp(v){ return Math.max(0, Math.min(100, v)); }
 
 function getCo(){ return companies.find(c=>c.id===activeId); }
 
-/* ---------------- rendering ---------------- */
-function renderSidebar(){
-  const el = document.getElementById('company-list');
+/* ---------------- view state & navigation ---------------- */
+let currentView = 'home';
+
+function goHome(){
+  currentView = 'home';
+  document.getElementById('home-view').style.display = '';
+  document.getElementById('detail-view').style.display = 'none';
+  renderHome();
+}
+function goDetail(id){
+  activeId = id;
+  currentView = 'detail';
+  document.getElementById('home-view').style.display = 'none';
+  document.getElementById('detail-view').style.display = '';
+  renderDetail();
+}
+
+function flagFor(co){
+  const score = orgScore(co);
+  if(score >= 70) return { cls:'clean', text:'Clean at last check' };
+  if(score >= 40) return { cls:'watch', text:'Verification pending' };
+  return { cls:'escalate', text:'Escalated \u2014 needs review' };
+}
+
+function renderPortfolioGrid(){
+  const el = document.getElementById('portfolio-grid');
   el.innerHTML = '';
   companies.forEach(co=>{
     const score = orgScore(co);
     const grade = gradeOf(score);
+    const flag = flagFor(co);
     const div = document.createElement('div');
-    div.className = 'company-item' + (co.id===activeId ? ' active' : '');
+    div.className = 'portfolio-card';
     div.innerHTML = `
       <div class="company-name">${co.name}</div>
-      <div class="company-meta">${co.industry}</div>
+      <div class="company-meta">${co.industry} &middot; ${co.limit}</div>
       <div class="company-score-row">
-        <span class="mono" style="font-size:12.5px;font-weight:600;color:var(--navy)">${score}</span>
+        <span class="mono" style="font-size:16px;font-weight:700;color:var(--navy)">${score}</span>
         <span class="mini-grade" style="background:${grade.bg};color:${grade.c}">${grade.g}</span>
-      </div>`;
-    div.onclick = ()=>{ activeId = co.id; renderAll(); };
+      </div>
+      <div class="pf-flag ${flag.cls}">${flag.text}</div>
+      <div class="view-link">Open trust console &rarr;</div>`;
+    div.onclick = ()=> goDetail(co.id);
     el.appendChild(div);
   });
+}
+
+function renderQuickSwitch(){
+  const el = document.getElementById('quick-switch');
+  el.innerHTML = companies.filter(c=>c.id!==activeId).map(co=>{
+    const score = orgScore(co);
+    return `<button class="quick-pill" onclick="goDetail('${co.id}')">${co.name} &middot; ${score}</button>`;
+  }).join('');
 }
 
 function renderHeader(co){
@@ -490,6 +681,39 @@ function renderMeta(co){
     <span>Sensitive workflows &nbsp;<b>${co.obs.sensitive}</b></span>
     <span>Verification-required events &nbsp;<b>${co.obs.verifyEvents}</b></span>
   `;
+}
+
+function renderCapacity(co){
+  document.getElementById('capacity-line').textContent =
+    `Would your team feel confident putting ${co.limitLabel} at risk with this signal today?`;
+}
+
+function renderCompare(co){
+  document.getElementById('submission-quote').textContent = co.submissionQuote;
+  document.getElementById('submission-tag').textContent = co.submissionAttestedBy;
+  const bits = [];
+  bits.push(`${co.obs.aiApps} AI apps &amp; vendors observed`);
+  bits.push(`${co.obs.unregistered} unregistered (not on the submission)`);
+  if(co.obs.sensitive > 0) bits.push(`${co.obs.sensitive} touching sensitive workflows`);
+  if(co.obs.verifyEvents > 0) bits.push(`${co.obs.verifyEvents} event${co.obs.verifyEvents===1?'':'s'} needing verification`);
+  document.getElementById('found-text').innerHTML = bits.join(' &middot; ');
+}
+
+function renderBacktest(){
+  const el = document.getElementById('backtest-rows');
+  el.innerHTML = companies.map(co=>{
+    const score = orgScore(co);
+    let color, tag;
+    if(score >= 70){ color = 'var(--green)'; tag = 'Clean at last check'; }
+    else if(score >= 40){ color = 'var(--amber)'; tag = 'Would have flagged \u2014 Verify'; }
+    else { color = 'var(--red)'; tag = 'Would have flagged \u2014 Escalate'; }
+    return `
+      <div class="backtest-row">
+        <div class="backtest-name">${co.name}</div>
+        <div class="backtest-bar-track"><div class="backtest-bar-fill" style="width:${score}%;background:${color}"></div></div>
+        <div class="backtest-tag">${tag}</div>
+      </div>`;
+  }).join('');
 }
 
 function renderFeed(co){
@@ -573,15 +797,27 @@ function verifyAttestation(btn){
   r.style.display = 'block';
 }
 
-function renderAll(){
+function renderHome(){
+  renderPortfolioGrid();
+  renderBacktest();
+}
+
+function renderDetail(){
   const co = getCo();
-  renderSidebar();
+  renderQuickSwitch();
   renderHeader(co);
+  renderCapacity(co);
   renderScorePanel(co);
   renderMeta(co);
+  renderCompare(co);
   renderFeed(co);
   renderReco(co);
   renderAttestation(co);
+}
+
+function renderAll(){
+  if(currentView === 'home') renderHome();
+  else renderDetail();
 }
 
 /* ---------------- simulation handlers ---------------- */
@@ -589,7 +825,7 @@ function applyScenario(key){
   const co = getCo();
   if(key === 'advance'){
     day += 1;
-    co.freshness = Math.max(60, co.freshness - (6 + Math.floor(Math.random()*5)));
+    co.freshness = Math.max(60, co.freshness - 8);
     renderAll();
     return;
   }
@@ -622,7 +858,7 @@ document.querySelectorAll('.sim-btn').forEach(btn=>{
   btn.addEventListener('click', ()=> applyScenario(btn.dataset.sim));
 });
 
-renderAll();
+goHome();
 </script>
 </body>
 </html>
