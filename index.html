@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parable Trust Console — Concept Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#12193f;
+    --navy:#1E2761;
+    --accent:#3457D5;
+    --ice:#CADCFC;
+    --paper:#F5F6FB;
+    --card:#FFFFFF;
+    --border:#E1E4F0;
+    --slate:#333A4E;
+    --mute:#6B7280;
+    --green:#1F7A5C;
+    --green-bg:#E6F4EE;
+    --amber:#9A6A16;
+    --amber-bg:#FBF1DF;
+    --red:#9B1C1C;
+    --red-bg:#FBEAEA;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background:var(--paper);
+    color:var(--slate);
+    font-size:14px;
+    line-height:1.5;
+  }
+  .mono{font-family:'IBM Plex Mono', ui-monospace, monospace;}
+
+  /* ---- top bar ---- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--navy-deep); color:#fff;
+    padding:14px 24px;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{
+    width:30px;height:30px;border-radius:8px;background:var(--ice);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--navy-deep); font-weight:700; font-size:16px;
+  }
+  .brand-text{font-weight:600; font-size:15px; letter-spacing:.2px;}
+  .brand-sub{color:#A9B4D6; font-size:12px; margin-left:8px;}
+  .demo-tag{
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+    color:#D8DEF3; padding:5px 10px; border-radius:6px; font-size:12px;
+  }
+
+  /* ---- layout ---- */
+  .layout{display:flex; min-height:calc(100vh - 58px);}
+  .sidebar{
+    width:260px; flex-shrink:0; background:var(--card);
+    border-right:1px solid var(--border); padding:18px 0;
+  }
+  .sidebar h3{
+    font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--mute); font-weight:600; margin:0 18px 10px;
+  }
+  .company-item{
+    padding:11px 18px; cursor:pointer; border-left:3px solid transparent;
+    display:flex; flex-direction:column; gap:3px;
+  }
+  .company-item:hover{background:#F7F8FD;}
+  .company-item.active{border-left-color:var(--accent); background:#F0F3FE;}
+  .company-name{font-weight:600; font-size:13.5px; color:var(--navy);}
+  .company-meta{font-size:11.5px; color:var(--mute);}
+  .company-score-row{display:flex; align-items:center; gap:6px; margin-top:2px;}
+  .mini-grade{
+    font-size:11px; font-weight:700; padding:1px 6px; border-radius:4px;
+  }
+
+  .main{flex:1; padding:24px 28px; max-width:1180px;}
+
+  /* ---- company header ---- */
+  .company-header{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:18px; flex-wrap:wrap; gap:14px;
+  }
+  .company-title{font-size:21px; font-weight:700; color:var(--navy); margin:0 0 4px;}
+  .company-sub{color:var(--mute); font-size:13px;}
+  .live-pill{
+    display:flex; align-items:center; gap:7px; font-size:12.5px;
+    color:var(--green); font-weight:600; background:var(--green-bg);
+    padding:6px 11px; border-radius:20px; white-space:nowrap;
+  }
+  .live-dot{
+    width:8px; height:8px; border-radius:50%; background:var(--green);
+    animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(31,122,92,.5);}
+    70%{box-shadow:0 0 0 7px rgba(31,122,92,0);}
+    100%{box-shadow:0 0 0 0 rgba(31,122,92,0);}
+  }
+
+  /* ---- score panel ---- */
+  .score-panel{
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:20px 22px; display:flex; gap:32px; align-items:center; flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .score-big{display:flex; align-items:baseline; gap:14px;}
+  .score-number{font-size:44px; font-weight:700; color:var(--navy);}
+  .score-grade{
+    font-size:15px; font-weight:700; padding:3px 11px; border-radius:6px;
+  }
+  .score-label{font-size:11.5px; color:var(--mute); text-transform:uppercase; letter-spacing:.06em; margin-top:2px;}
+  .subscores{display:flex; gap:26px; flex-wrap:wrap; flex:1;}
+  .subscore{min-width:118px;}
+  .subscore-name{font-size:11.5px; color:var(--mute); margin-bottom:5px;}
+  .subscore-bar{height:6px; background:#EDEFF6; border-radius:3px; overflow:hidden; margin-bottom:4px;}
+  .subscore-fill{height:100%; background:var(--accent); border-radius:3px; transition:width .5s ease;}
+  .subscore-val{font-size:12.5px; font-weight:600; color:var(--navy);}
+
+  .meta-row{
+    display:flex; gap:22px; font-size:12.5px; color:var(--mute);
+    margin-bottom:20px; flex-wrap:wrap;
+  }
+  .meta-row b{color:var(--slate); font-weight:600;}
+
+  /* ---- simulate bar ---- */
+  .simulate-bar{
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:14px 18px; margin-bottom:20px;
+  }
+  .simulate-label{font-size:11.5px; color:var(--mute); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px;}
+  .sim-buttons{display:flex; gap:8px; flex-wrap:wrap;}
+  button.sim-btn{
+    font-family:inherit; font-size:12.5px; font-weight:500;
+    padding:8px 13px; border-radius:7px; border:1px solid var(--border);
+    background:#fff; color:var(--slate); cursor:pointer;
+  }
+  button.sim-btn:hover{border-color:var(--accent); color:var(--accent);}
+  button.sim-btn.advance{
+    margin-left:auto; background:var(--navy); color:#fff; border-color:var(--navy);
+  }
+  button.sim-btn.advance:hover{opacity:.9; color:#fff;}
+
+  /* ---- two column ---- */
+  .columns{display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;}
+  .col-feed{flex:1.3; min-width:360px;}
+  .col-side{flex:1; min-width:300px; display:flex; flex-direction:column; gap:18px;}
+
+  .panel-title{font-size:13px; font-weight:600; color:var(--navy); margin:0 0 10px;}
+
+  .feed-card{
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:16px 18px; max-height:520px; overflow-y:auto;
+  }
+  .feed-item{
+    padding:12px 0; border-bottom:1px solid #EEF0F7;
+  }
+  .feed-item:last-child{border-bottom:none;}
+  .feed-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;}
+  .feed-title{font-size:13px; font-weight:600; color:var(--slate);}
+  .feed-time{font-size:11px; color:var(--mute); margin-top:2px;}
+  .verdict-badge{
+    font-size:11px; font-weight:700; padding:3px 9px; border-radius:5px;
+    text-transform:uppercase; letter-spacing:.03em; white-space:nowrap;
+  }
+  .v-trusted{background:var(--green-bg); color:var(--green);}
+  .v-verify{background:var(--amber-bg); color:var(--amber);}
+  .v-escalate{background:var(--red-bg); color:var(--red);}
+  .feed-reasons{margin:6px 0 0; padding-left:18px; font-size:12.5px; color:var(--mute);}
+  .feed-reasons li{margin-bottom:2px;}
+  .feed-score{font-size:11.5px; color:var(--mute); margin-top:4px;}
+  .empty-feed{color:var(--mute); font-size:13px; padding:6px 0;}
+
+  /* ---- recommendation ---- */
+  .reco-card{
+    border-radius:10px; padding:16px 18px; border:1px solid var(--border);
+  }
+  .reco-trusted{background:var(--green-bg); border-color:#CFE9DD;}
+  .reco-verify{background:var(--amber-bg); border-color:#F0DFB8;}
+  .reco-escalate{background:var(--red-bg); border-color:#F2C9C9;}
+  .reco-heading{font-size:12px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; margin-bottom:6px;}
+  .reco-trusted .reco-heading{color:var(--green);}
+  .reco-verify .reco-heading{color:var(--amber);}
+  .reco-escalate .reco-heading{color:var(--red);}
+  .reco-text{font-size:13.5px; color:var(--slate); margin-bottom:10px; line-height:1.5;}
+  .reco-disclaimer{
+    font-size:11.5px; color:var(--mute); font-style:italic; border-top:1px solid rgba(0,0,0,.06);
+    padding-top:9px;
+  }
+
+  /* ---- attestation ---- */
+  .attest-card{
+    background:var(--navy-deep); color:#EDEFFB; border-radius:10px; padding:18px 20px;
+  }
+  .attest-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+  .attest-title{font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:#9FADD6; font-weight:600;}
+  .attest-hash{font-size:11px; color:#7C8AC0; margin:8px 0 12px; word-break:break-all;}
+  .attest-row{display:flex; justify-content:space-between; font-size:12.5px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,.08);}
+  .attest-row:last-of-type{border-bottom:none;}
+  .attest-row span:first-child{color:#9FADD6;}
+  .verify-btn{
+    margin-top:12px; width:100%; font-family:inherit; font-size:12.5px; font-weight:600;
+    padding:9px; border-radius:7px; border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.06); color:#EDEFFB; cursor:pointer;
+  }
+  .verify-btn:hover{background:rgba(255,255,255,.12);}
+  .verify-result{font-size:12px; margin-top:8px; color:#8FE0BD; display:none;}
+
+  footer{
+    text-align:center; font-size:11.5px; color:var(--mute); padding:22px 0 30px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">P</div>
+    <div class="brand-text">Parable Security</div>
+    <div class="brand-sub">Trust Console</div>
+  </div>
+  <div class="demo-tag">Concept demo &middot; simulated data, not connected to a live system</div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h3>Portfolio</h3>
+    <div id="company-list"></div>
+  </div>
+
+  <div class="main">
+    <div class="company-header">
+      <div>
+        <h1 class="company-title" id="co-name"></h1>
+        <div class="company-sub" id="co-sub"></div>
+      </div>
+      <div class="live-pill"><span class="live-dot"></span>Continuous monitoring active</div>
+    </div>
+
+    <div class="score-panel">
+      <div class="score-big">
+        <div>
+          <div class="score-number mono" id="score-number">--</div>
+          <div class="score-label">Organizational TrustScore</div>
+        </div>
+        <div class="score-grade" id="score-grade">--</div>
+      </div>
+      <div class="subscores" id="subscores"></div>
+    </div>
+
+    <div class="meta-row" id="meta-row"></div>
+
+    <div class="simulate-bar">
+      <div class="simulate-label">Simulate a new signal reaching the collector</div>
+      <div class="sim-buttons">
+        <button class="sim-btn" data-sim="shadow">Unregistered AI tool discovered</button>
+        <button class="sim-btn" data-sim="injection">Prompt injection attempt</button>
+        <button class="sim-btn" data-sim="vendor_lapse">Vendor SOC 2 lapsed</button>
+        <button class="sim-btn" data-sim="vendor_renew">Vendor recertified</button>
+        <button class="sim-btn" data-sim="wire">Large wire, unverified counterparty</button>
+        <button class="sim-btn" data-sim="clean">Routine verified renewal check</button>
+        <button class="sim-btn advance" data-sim="advance">Advance time &rarr;</button>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="col-feed">
+        <p class="panel-title">Live signal feed</p>
+        <div class="feed-card" id="feed-card"></div>
+      </div>
+      <div class="col-side">
+        <div>
+          <p class="panel-title">Underwriting recommendation</p>
+          <div class="reco-card" id="reco-card"></div>
+        </div>
+        <div>
+          <p class="panel-title">Trust attestation</p>
+          <div class="attest-card" id="attest-card"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Illustrative MVP &mdash; scoring follows the deterministic engine in the Trust Technical Document (100 &minus; signal penalties, forced escalation on untrusted instruction provenance or out-of-scope agent action).</footer>
+  </div>
+</div>
+
+<script>
+/* ---------------- scoring engine, mirrors the Technical Document ---------------- */
+const PENALTIES = {
+  channel_fail: -40, channel_warn: -15,
+  counterparty_suspicious: -30, counterparty_new: -12,
+  intent_high: -25, intent_medium: -10,
+  behavioral_major: -25, behavioral_minor: -8,
+  relationship_none: -15, relationship_first: -10,
+  value_at_risk: -10,
+};
+function verdictFromScore(score, forced){
+  if(forced) return forced;
+  if(score >= 70) return 'TRUSTED';
+  if(score >= 40) return 'VERIFY';
+  return 'ESCALATE';
+}
+
+/* ---------------- scenario presets ----------------
+   `score` is the resulting action score (0-100), already computed from
+   100 minus the relevant signal penalties from the table above, so the
+   verdict mapping (>=70 TRUSTED / >=40 VERIFY / else ESCALATE) applies
+   directly. `forced` overrides the verdict only, per the two hard rules
+   (untrusted instruction provenance; out-of-scope agent action) — the
+   score itself is never overridden, matching the Technical Document. */
+const SCENARIOS = {
+  shadow: {
+    title: 'New non-human identity observed acting outside the registry',
+    score: clamp(100 + PENALTIES.channel_warn + PENALTIES.counterparty_new + PENALTIES.relationship_none + PENALTIES.intent_medium),
+    forced: null,
+    reasons: [
+      'Actor identifier not present in the trust registry (shadow AI)',
+      'No prior relationship on file for this actor',
+      'Moderate urgency markers in the setup request',
+    ],
+    subscoreDelta: { gov:-6 },
+    obsDelta: { unregistered:1, aiApps:1 },
+  },
+  injection: {
+    title: 'Agent tool call — instruction provenance check',
+    score: clamp(100 + PENALTIES.intent_high - 50),
+    forced: 'ESCALATE',
+    reasons: [
+      'Instruction traced to untrusted ingested content (prompt injection) \u2014 hard override to ESCALATE',
+      'High urgency and authority pressure markers detected',
+    ],
+    subscoreDelta: { gov:-9, workflow:-10 },
+    obsDelta: { verifyEvents:1 },
+  },
+  vendor_lapse: {
+    title: 'Vendor signal: SOC 2 certification lapsed',
+    score: clamp(100 - 42),
+    forced: null,
+    reasons: [
+      'Continuous vendor trust (Dynamic TPRM): high-severity signal, posture delta \u221212',
+      'No current compensating certification on file',
+    ],
+    subscoreDelta: { thirdParty:-8 },
+    obsDelta: { verifyEvents:1 },
+  },
+  vendor_renew: {
+    title: 'Vendor signal: SOC 2 certification renewed',
+    score: clamp(100 - 12),
+    forced: null,
+    reasons: [
+      'Continuous vendor trust (Dynamic TPRM): info-severity signal, posture delta +6',
+      'Certification chain now current',
+    ],
+    subscoreDelta: { thirdParty:5 },
+    obsDelta: {},
+  },
+  wire: {
+    title: 'Payment workflow — vendor bank-change request',
+    score: clamp(100 + PENALTIES.channel_warn + PENALTIES.counterparty_new + PENALTIES.value_at_risk),
+    forced: 'VERIFY',
+    reasons: [
+      'Vendor bank-change requested on an unauthorized channel \u2014 hard override to VERIFY',
+      'Value at risk \u2265 $100k with an unverified counterparty',
+    ],
+    subscoreDelta: { identity:-5, workflow:-4 },
+    obsDelta: { verifyEvents:1 },
+  },
+  clean: {
+    title: 'Routine renewal check — established counterparty',
+    score: clamp(100),
+    forced: null,
+    reasons: [
+      'Verified channel, known counterparty, no behavioral deviation',
+      'Action within the agent\u2019s delegated, time-boxed scope',
+    ],
+    subscoreDelta: { identity:2, workflow:2 },
+    obsDelta: {},
+  },
+};
+
+/* ---------------- portfolio ---------------- */
+let day = 1;
+const companies = [
+  {
+    id:'abc', name:'ABC Health', industry:'Healthcare', limit:'$25M requested limit',
+    sub:{gov:91, identity:86, thirdParty:73, workflow:84}, freshness:96,
+    obs:{aiApps:47, unregistered:5, sensitive:3, verifyEvents:1},
+    feed:[], entities:{}
+  },
+  {
+    id:'ridge', name:'Ridgeline Manufacturing Co.', industry:'Industrial / Manufacturing', limit:'$15M requested limit',
+    sub:{gov:93, identity:92, thirdParty:88, workflow:90}, freshness:99,
+    obs:{aiApps:12, unregistered:0, sensitive:1, verifyEvents:0},
+    feed:[], entities:{}
+  },
+  {
+    id:'beacon', name:'Beacon Point Financial', industry:'Fintech', limit:'$40M requested limit',
+    sub:{gov:58, identity:66, thirdParty:61, workflow:70}, freshness:88,
+    obs:{aiApps:31, unregistered:9, sensitive:6, verifyEvents:3},
+    feed:[], entities:{}
+  },
+  {
+    id:'sable', name:'Sable & Cross LLP', industry:'Legal services', limit:'$10M requested limit',
+    sub:{gov:79, identity:81, thirdParty:70, workflow:77}, freshness:94,
+    obs:{aiApps:9, unregistered:1, sensitive:2, verifyEvents:0},
+    feed:[], entities:{}
+  },
+];
+let activeId = 'abc';
+
+function orgScore(co){
+  const vals = Object.values(co.sub);
+  const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
+  return Math.max(0, Math.min(100, Math.round(avg)));
+}
+function gradeOf(score){
+  if(score>=90) return {g:'A', bg:'var(--green-bg)', c:'var(--green)'};
+  if(score>=80) return {g:'B', bg:'var(--green-bg)', c:'var(--green)'};
+  if(score>=70) return {g:'C', bg:'var(--amber-bg)', c:'var(--amber)'};
+  if(score>=60) return {g:'D', bg:'var(--amber-bg)', c:'var(--amber)'};
+  return {g:'F', bg:'var(--red-bg)', c:'var(--red)'};
+}
+function verdictClass(v){
+  if(v==='TRUSTED') return 'v-trusted';
+  if(v==='VERIFY') return 'v-verify';
+  return 'v-escalate';
+}
+function clamp(v){ return Math.max(0, Math.min(100, v)); }
+
+function getCo(){ return companies.find(c=>c.id===activeId); }
+
+/* ---------------- rendering ---------------- */
+function renderSidebar(){
+  const el = document.getElementById('company-list');
+  el.innerHTML = '';
+  companies.forEach(co=>{
+    const score = orgScore(co);
+    const grade = gradeOf(score);
+    const div = document.createElement('div');
+    div.className = 'company-item' + (co.id===activeId ? ' active' : '');
+    div.innerHTML = `
+      <div class="company-name">${co.name}</div>
+      <div class="company-meta">${co.industry}</div>
+      <div class="company-score-row">
+        <span class="mono" style="font-size:12.5px;font-weight:600;color:var(--navy)">${score}</span>
+        <span class="mini-grade" style="background:${grade.bg};color:${grade.c}">${grade.g}</span>
+      </div>`;
+    div.onclick = ()=>{ activeId = co.id; renderAll(); };
+    el.appendChild(div);
+  });
+}
+
+function renderHeader(co){
+  document.getElementById('co-name').textContent = co.name;
+  document.getElementById('co-sub').textContent = `${co.industry} \u00B7 ${co.limit} \u00B7 Cyber liability submission`;
+}
+
+function renderScorePanel(co){
+  const score = orgScore(co);
+  const grade = gradeOf(score);
+  document.getElementById('score-number').textContent = score;
+  const gEl = document.getElementById('score-grade');
+  gEl.textContent = 'Grade ' + grade.g;
+  gEl.style.background = grade.bg;
+  gEl.style.color = grade.c;
+
+  const names = {gov:'AI Governance', identity:'Identity Trust', thirdParty:'Third-Party Trust', workflow:'Critical Workflow Trust'};
+  const wrap = document.getElementById('subscores');
+  wrap.innerHTML = '';
+  Object.keys(names).forEach(k=>{
+    const v = clamp(co.sub[k]);
+    const div = document.createElement('div');
+    div.className = 'subscore';
+    div.innerHTML = `
+      <div class="subscore-name">${names[k]}</div>
+      <div class="subscore-bar"><div class="subscore-fill" style="width:${v}%"></div></div>
+      <div class="subscore-val mono">${v}</div>`;
+    wrap.appendChild(div);
+  });
+}
+
+function renderMeta(co){
+  document.getElementById('meta-row').innerHTML = `
+    <span>Evidence freshness &nbsp;<b>${co.freshness}%</b></span>
+    <span>AI apps &amp; vendors in registry &nbsp;<b>${co.obs.aiApps}</b></span>
+    <span>Unregistered (shadow AI) &nbsp;<b>${co.obs.unregistered}</b></span>
+    <span>Sensitive workflows &nbsp;<b>${co.obs.sensitive}</b></span>
+    <span>Verification-required events &nbsp;<b>${co.obs.verifyEvents}</b></span>
+  `;
+}
+
+function renderFeed(co){
+  const el = document.getElementById('feed-card');
+  if(co.feed.length === 0){
+    el.innerHTML = '<div class="empty-feed">No simulated signals yet for this account. Use the buttons above to observe how continuous monitoring updates the score and recommendation in real time.</div>';
+    return;
+  }
+  el.innerHTML = co.feed.map(item => `
+    <div class="feed-item">
+      <div class="feed-top">
+        <span class="feed-title">${item.title}</span>
+        <span class="verdict-badge ${verdictClass(item.verdict)}">${item.verdict}</span>
+      </div>
+      <div class="feed-time">Day ${item.day} &middot; ${item.time}</div>
+      <ul class="feed-reasons">${item.reasons.map(r=>`<li>${r}</li>`).join('')}</ul>
+      <div class="feed-score mono">Action score: ${item.score}/100</div>
+    </div>
+  `).join('');
+}
+
+function worstOpenVerdict(co){
+  // Most recent occurrence of the worst verdict, weighted toward recent events
+  let worst = 'TRUSTED';
+  for(const item of co.feed){
+    if(item.verdict === 'ESCALATE') return 'ESCALATE';
+    if(item.verdict === 'VERIFY') worst = 'VERIFY';
+  }
+  return worst;
+}
+
+function renderReco(co){
+  const v = worstOpenVerdict(co);
+  const el = document.getElementById('reco-card');
+  let cls, heading, text;
+  if(v === 'ESCALATE'){
+    cls = 'reco-escalate'; heading = 'Condition before bind';
+    text = 'At least one open signal escalated on a hard override (untrusted instruction provenance or an out-of-scope agent action). Recommend conditioning renewal on remediation, or referring to a senior underwriter before proceeding.';
+  } else if(v === 'VERIFY'){
+    cls = 'reco-verify'; heading = 'Request additional evidence';
+    text = 'One or more signals need verification before bind \u2014 not blocking, but not clean either. Recommend requesting supporting evidence from the insured, or a shorter interim term while it resolves.';
+  } else {
+    cls = 'reco-trusted'; heading = 'Proceed at standard terms';
+    text = 'No open verification or escalation items on the current evidence. Recommend proceeding at standard terms, subject to your own pricing and appetite review.';
+  }
+  el.className = 'reco-card ' + cls;
+  el.innerHTML = `
+    <div class="reco-heading">${heading}</div>
+    <div class="reco-text">${text}</div>
+    <div class="reco-disclaimer">Parable surfaces this evidence \u2014 the underwriting decision, pricing, and terms stay with you.</div>
+  `;
+}
+
+function pseudoHash(seed){
+  let h = 0;
+  for(let i=0;i<seed.length;i++){ h = (h*31 + seed.charCodeAt(i)) >>> 0; }
+  return h.toString(16).padStart(8,'0');
+}
+
+function renderAttestation(co){
+  const score = orgScore(co);
+  const grade = gradeOf(score);
+  const seed = co.id + score + co.freshness + day + co.feed.length;
+  const hash = pseudoHash(seed) + pseudoHash(seed+'x') + pseudoHash(seed+'y');
+  const el = document.getElementById('attest-card');
+  el.innerHTML = `
+    <div class="attest-head">
+      <div class="attest-title">Sealed trust attestation</div>
+      <div style="font-size:11px;color:#7C8AC0;">Day ${day}</div>
+    </div>
+    <div class="attest-row"><span>Organizational TrustScore</span><span class="mono">${score}/100 (${grade.g})</span></div>
+    <div class="attest-row"><span>Material observations</span><span class="mono">${co.obs.aiApps} apps &middot; ${co.obs.unregistered} unregistered &middot; ${co.obs.verifyEvents} verify</span></div>
+    <div class="attest-row"><span>Evidence freshness</span><span class="mono">${co.freshness}%</span></div>
+    <div class="attest-hash mono">seq:${co.feed.length.toString().padStart(3,'0')} &middot; hash:${hash}&hellip;</div>
+    <button class="verify-btn" onclick="verifyAttestation(this)">Verify attestation (offline)</button>
+    <div class="verify-result" id="verify-result">&#10003; Signature valid &middot; chain intact &middot; matches sealed TrustScore (demo)</div>
+  `;
+}
+function verifyAttestation(btn){
+  const r = document.getElementById('verify-result');
+  r.style.display = 'block';
+}
+
+function renderAll(){
+  const co = getCo();
+  renderSidebar();
+  renderHeader(co);
+  renderScorePanel(co);
+  renderMeta(co);
+  renderFeed(co);
+  renderReco(co);
+  renderAttestation(co);
+}
+
+/* ---------------- simulation handlers ---------------- */
+function applyScenario(key){
+  const co = getCo();
+  if(key === 'advance'){
+    day += 1;
+    co.freshness = Math.max(60, co.freshness - (6 + Math.floor(Math.random()*5)));
+    renderAll();
+    return;
+  }
+  const s = SCENARIOS[key];
+  const score = s.score;
+  const verdict = verdictFromScore(score, s.forced);
+
+  const now = new Date();
+  const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  co.feed.unshift({ title:s.title, verdict, reasons:s.reasons, score, day, time });
+  if(co.feed.length > 12) co.feed.pop();
+
+  // sub-score deltas
+  if(s.subscoreDelta){
+    Object.keys(s.subscoreDelta).forEach(k=>{
+      co.sub[k] = clamp(co.sub[k] + s.subscoreDelta[k]);
+    });
+  }
+  // observation deltas
+  if(s.obsDelta){
+    Object.keys(s.obsDelta).forEach(k=>{
+      co.obs[k] = (co.obs[k]||0) + s.obsDelta[k];
+    });
+  }
+  co.freshness = 99;
+  renderAll();
+}
+
+document.querySelectorAll('.sim-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> applyScenario(btn.dataset.sim));
+});
+
+renderAll();
+</script>
+</body>
+</html>
